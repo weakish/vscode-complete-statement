@@ -3,7 +3,7 @@
     "displayName": "Complete Statement",
     "description": "complete statement for languages with a syntax similar to C",
     "version": "0.0.0",
-    "publisher": "Jakukyo Friel",
+    "publisher": "weakish",
     "engines": {
         "vscode": "^1.4.0"
     },
@@ -54,5 +54,17 @@
         "c-syntax",
         "intelliJ"
     ],
-    "preview": true
+    "badges": [
+        {
+            "description": "0BSD",
+            "url": "https://img.shields.io/badge/license-0BSD-lightgrey.svg",
+            "href": "https://opensource.org/licenses/FPL-1.0.0"
+        },
+        {
+            "description": "TypeScript",
+            "url": "https://img.shields.io/badge/TypeScript-1.8.10-blue.svg",
+            "href": "http://www.typescriptlang.org/"
+        }
+    ],
+    "preview": true,
 }
