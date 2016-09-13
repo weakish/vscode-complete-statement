@@ -54,6 +54,7 @@
         "c-syntax",
         "intelliJ"
     ],
+    "icon": "vscode-complete-statement.png",
     "badges": [
         {
             "description": "0BSD",
