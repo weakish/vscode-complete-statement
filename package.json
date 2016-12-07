@@ -40,13 +40,12 @@
         "vscode": "^0.11.0"
     },
     "license": "0BSD",
-    "homepage": "https://weakish.github.io/vscode-complete-statement",
     "repository": {
         "type": "git",
-        "url": "https://weakish.github.io/vscode-complete-statement.git"
+        "url": "https://github.com/weakish/vscode-complete-statement.git"
     },
     "bugs": {
-        "url": "https://weakish.github.io/vscode-complete-statement/issues"
+        "url": "https://github.com/weakish/vscode-complete-statement/issues"
     },
     "keywords": [
         "completion",
@@ -67,5 +66,5 @@
             "href": "http://www.typescriptlang.org/"
         }
     ],
-    "preview": true,
+    "preview": true
 }
