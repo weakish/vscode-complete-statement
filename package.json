@@ -2,7 +2,7 @@
     "name": "complete-statement",
     "displayName": "Complete Statement",
     "description": "complete statement for languages with a syntax similar to C",
-    "version": "0.0.0",
+    "version": "0.0.2016",
     "publisher": "weakish",
     "engines": {
         "vscode": "^1.4.0"
