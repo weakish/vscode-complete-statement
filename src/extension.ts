@@ -35,8 +35,8 @@ function complete_statement(
     let current_line: TextLine = textEditor.document.lineAt(current_line_number);
     if (looks_like_json(current_line))
     {
-        insert_comma_at_line_end(current_line, textEditorEdit);
-        textEditor.selection = goto_line_end(current_line, textEditor);
+        insert_comma_at_line_end(current_line, textEditorEdit)
+        textEditor.selection = goto_line_end(current_line, textEditor)
     }
     else if (looks_like_complex_structure(current_line)) {
         let braces: string;
@@ -80,6 +80,27 @@ function complete_statement(
     }
 }
 
+function looks_like_key(text: string, quote: string): boolean
+{
+    if (text.length === 1)
+    {
+        return false
+    }
+    else if (text.endsWith(`\${quote}`))
+    {
+        // Ignore rare valid forms like `'\\': 1`.
+        return false
+    }
+    else if (text.endsWith(quote))
+    {
+        return true
+    }
+    else
+    {
+        return false
+    }
+}
+
 function looks_like_json(line: TextLine): boolean
 {
     // `Class::method`
@@ -92,10 +113,50 @@ function looks_like_json(line: TextLine): boolean
     {
         return false
     }
-    // 'a': 1
+    // a: 1
     else if (line.text.includes(':'))
     {
-        return true
+        // Exclude `:` in strings.
+        const colon_position: number = line.text.indexOf(':')
+        const before_colon: string = line.text.slice(0, colon_position)
+        if (before_colon.includes("'") ||
+            before_colon.includes('"') ||
+            before_colon.includes('`'))
+        {
+            const trimmed_before_colon = before_colon.trim()
+            if (trimmed_before_colon.startsWith('"'))
+            {
+                return looks_like_key(trimmed_before_colon, '"')
+            }
+            else if (trimmed_before_colon.startsWith("'"))
+            {
+                return looks_like_key(trimmed_before_colon, "'")
+            }
+            else if (trimmed_before_colon.startsWith("`"))
+            {
+                return looks_like_key(trimmed_before_colon, "`")
+            }
+            else if (trimmed_before_colon.startsWith('['))
+            {
+                if (trimmed_before_colon.endsWith(']'))
+                {
+                    // Ignore rare non literal object forms like `["a", "]:"]`.
+                    return true
+                }
+                else
+                {
+                    return false
+                }
+            }
+            else
+            {
+                return false
+            }
+        }
+        else
+        {
+            return true
+        }
     }
     else
     {
@@ -151,7 +212,7 @@ function insert_semicolon_at_line_end(line: TextLine,
                         ): void
 {
     if (!line.text.endsWith(character)) {
-        textEditorEdit.insert(line.range.end, character);
+        textEditorEdit.insert(line.range.end, character)
     }
 }
 

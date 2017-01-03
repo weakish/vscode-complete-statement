@@ -3,8 +3,8 @@ Complete Statement with semicolon, comma or braces in vscode.
 Mimic IntelliJ's complete statement.
 In other words:
 
-- Completes normal statement with `;` and move to line end.
-- Completes JavaScript object notation
+- Complete normal statement with `;` and move to line end.
+- Try to complete JavaScript object notation
   (or similar structure in other languages) with `,` and move to line end.
 - Try to complete complex structures with braces.
 
