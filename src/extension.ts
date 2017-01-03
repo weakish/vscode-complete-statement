@@ -30,11 +30,15 @@ export function deactivate() {
 function complete_statement(
         textEditor: TextEditor,
         textEditorEdit: TextEditorEdit
-        
         ): void　{
     let current_line_number: number = textEditor.selection.start.line;
     let current_line: TextLine = textEditor.document.lineAt(current_line_number);
-    if (naive_complex_statement_detector(current_line)) {
+    if (looks_like_json(current_line))
+    {
+        insert_comma_at_line_end(current_line, textEditorEdit);
+        textEditor.selection = goto_line_end(current_line, textEditor);
+    }
+    else if (looks_like_complex_structure(current_line)) {
         let braces: string;
         let indent_level: number;
         // Assuming use spaces to indent.
@@ -65,7 +69,7 @@ function complete_statement(
         // creating a new selection of current line and its `range.end - n`,
         // then the `range.end` will still be the original end (before insert),
         // thus it will go backward n characters from the original end.
-        // The position within the inserted string will be unreachable.    
+        // The position within the inserted string will be unreachable.
         //
         // See [#11841](https://github.com/Microsoft/vscode/issues/11841)
         current_line = textEditor.document.lineAt(current_line_number);
@@ -73,10 +77,33 @@ function complete_statement(
     } else {
         insert_semicolon_at_line_end(current_line, textEditorEdit);
         textEditor.selection = goto_line_end(current_line, textEditor);
-    }    
+    }
 }
 
-function naive_complex_statement_detector(line: TextLine) {
+function looks_like_json(line: TextLine): boolean
+{
+    // `Class::method`
+    if (line.text.includes('::'))
+    {
+        return false
+    }
+    // { 'a': 1, 'b': 2 }
+    else if (line.text.includes('{') || line.text.includes('}'))
+    {
+        return false
+    }
+    // 'a': 1
+    else if (line.text.includes(':'))
+    {
+        return true
+    }
+    else
+    {
+        return false
+    }
+}
+
+function looks_like_complex_structure(line: TextLine): boolean {
     if (line.text.includes("function ")) { // function
         return true;
     } else if ( // if else
@@ -105,12 +132,26 @@ function naive_complex_statement_detector(line: TextLine) {
     }
 }
 
-function insert_semicolon_at_line_end(
-        line: TextLine,
-        textEditorEdit: TextEditorEdit
-        ): void {
-    if (!line.text.endsWith(";")) {
-        textEditorEdit.insert(line.range.end, ";");
+function insert_comma_at_line_end(line: TextLine,
+                                  textEditorEdit: TextEditorEdit
+                                 ): void
+{
+    insert_at_end(',', line, textEditorEdit)
+}
+
+function insert_semicolon_at_line_end(line: TextLine,
+                                      textEditorEdit: TextEditorEdit
+                                     ): void
+{
+    insert_at_end(';', line, textEditorEdit)
+}
+
+    function insert_at_end(character: string,
+                        line: TextLine, textEditorEdit: TextEditorEdit
+                        ): void
+{
+    if (!line.text.endsWith(character)) {
+        textEditorEdit.insert(line.range.end, character);
     }
 }
 

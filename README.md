@@ -1,7 +1,12 @@
-Complete Statement with semicolon or brace in vscode.
+Complete Statement with semicolon, comma or braces in vscode.
 
 Mimic IntelliJ's complete statement.
-In other words, append `;` and move to line end.
+In other words:
+
+- Completes normal statement with `;` and move to line end.
+- Completes JavaScript object notation
+  (or similar structure in other languages) with `,` and move to line end.
+- Try to complete complex structures with braces.
 
 Works with languages with a C style syntax.
 
@@ -49,6 +54,18 @@ function works_too(para: number) {
 
     }
 }
+// Complete JavaScript object notation with `,`
+{
+    a: 1][
+}
+// `ctrl+;`
+{
+    a: 1,][
+}
+// Complete one line JavaScript object with `;`
+{ a: 1, b: 2 ][}
+// `ctrl+;`
+{ a: 1, b: 2 };
 ```
 
 Bugs
