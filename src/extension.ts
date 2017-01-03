@@ -52,11 +52,11 @@ function complete_statement(
         const indent_space_count: number = tab_stop * (indent_level + 1)
         const indent_spaces: string = " ".repeat(indent_space_count);
         const less_indent_spaces: string = " ".repeat(tab_stop * indent_level);
-        const _brances: string = `{\n${indent_spaces}\n${less_indent_spaces}}`
+        const _braces: string = `{\n${indent_spaces}\n${less_indent_spaces}}`
         if (current_line.text.endsWith(" ")) { // avoid duplicated spaces
-            braces = _brances;
+            braces = _braces;
         } else {
-            braces = ` ${_brances}`;
+            braces = ` ${_braces}`;
         }
         insert_braces(braces, current_line, textEditorEdit);
         // Unlike IntelliJ, it does not go to the start (`^` in vim) of new line.
