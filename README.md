@@ -23,7 +23,7 @@ We use `][` to represent cursor.
 
 ```typescript
 ][
-let a_number = 2][ # deside to specify type
+let a_number = 2][ # decide to specify type
 let a_number: number][ = 2
 // press `ctrl+;` (`cmd+;` on mac)
 let a_number: number = 2;][
