@@ -68,6 +68,17 @@ function works_too(para: number) {
 { a: 1, b: 2 };
 ```
 
+Configuration
+-------------
+
+By default, complete-statement uses Java style (beginning brace on same line).
+To use Allman style (beginning brace on its own line),
+add the following line in settings:
+
+```json
+    "complete-statement.allman": true
+```
+
 Bugs
 ----
 

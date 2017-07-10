@@ -27,38 +27,54 @@ export function deactivate() {
     console.log('"complete-statement" is deactivated.');
 }
 
-function complete_statement(
-        textEditor: TextEditor,
-        textEditorEdit: TextEditorEdit
-        ): void　{
-    let current_line_number: number = textEditor.selection.start.line;
-    let current_line: TextLine = textEditor.document.lineAt(current_line_number);
+function complete_statement(textEditor: TextEditor,
+                            textEditorEdit: TextEditorEdit
+                           ): void
+{
+    let current_line_number: number = textEditor.selection.start.line
+    let current_line: TextLine = textEditor.document.lineAt(current_line_number)
     if (looks_like_json(current_line))
     {
         insert_comma_at_line_end(current_line, textEditorEdit)
         textEditor.selection = goto_line_end(current_line, textEditor)
     }
-    else if (looks_like_complex_structure(current_line)) {
-        let braces: string;
-        let indent_level: number;
+    else if (looks_like_complex_structure(current_line))
+    {
         // Assuming use spaces to indent.
-        const configuration = getConfiguration("editor");
-        const tab_stop: number = configuration.get("tabSize", 4);
-        if  (current_line.text.startsWith(" ")) { // indented
-            indent_level = current_line.text.lastIndexOf(" ".repeat(tab_stop)) / tab_stop + 1;
-        } else {
-            indent_level = 0;
+        const tab_stop: number = getConfiguration('editor').get('tabSize', 4)
+        let indent_level: number
+        if  (current_line.text.startsWith(" ")) // indented
+        {
+            const indent_position: number =
+                    current_line.text.lastIndexOf(" ".repeat(tab_stop))
+            indent_level = indent_position / tab_stop + 1
+        } else
+        {
+            indent_level = 0
         }
         const indent_space_count: number = tab_stop * (indent_level + 1)
-        const indent_spaces: string = " ".repeat(indent_space_count);
-        const less_indent_spaces: string = " ".repeat(tab_stop * indent_level);
-        const _braces: string = `{\n${indent_spaces}\n${less_indent_spaces}}`
-        if (current_line.text.endsWith(" ")) { // avoid duplicated spaces
-            braces = _braces;
-        } else {
-            braces = ` ${_braces}`;
+        const indent_spaces: string = " ".repeat(indent_space_count)
+        const less_indent_spaces: string = " ".repeat(tab_stop * indent_level)
+        let braces: string
+        const allman: boolean =
+                getConfiguration('complete-statement').get('allman', false)
+        if (allman)
+        {
+            braces = `\n${less_indent_spaces}{\n${indent_spaces}\n${less_indent_spaces}}`
         }
-        insert_braces(braces, current_line, textEditorEdit);
+        else
+        {
+            braces = `{\n${indent_spaces}\n${less_indent_spaces}}`
+            if (current_line.text.endsWith(" ")) // avoid duplicated spaces
+            {
+                // pass
+            }
+            else
+            {
+                braces = ` ${braces}`;
+            }
+        }
+        insert_braces(braces, current_line, textEditorEdit)
         // Unlike IntelliJ, it does not go to the start (`^` in vim) of new line.
         // You have to press `down` arrow key.
         // Why?
@@ -72,11 +88,12 @@ function complete_statement(
         // The position within the inserted string will be unreachable.
         //
         // See [#11841](https://github.com/Microsoft/vscode/issues/11841)
-        current_line = textEditor.document.lineAt(current_line_number);
+        current_line = textEditor.document.lineAt(current_line_number)
         textEditor.selection = goto_line_end(current_line, textEditor, 2)
-    } else {
-        insert_semicolon_at_line_end(current_line, textEditorEdit);
-        textEditor.selection = goto_line_end(current_line, textEditor);
+    } else
+    {
+        insert_semicolon_at_line_end(current_line, textEditorEdit)
+        textEditor.selection = goto_line_end(current_line, textEditor)
     }
 }
 
@@ -236,13 +253,14 @@ function insert_semicolon_at_line_end(line: TextLine,
     }
 }
 
-function insert_braces(
-        braces: string,
-        line: TextLine,
-        textEditorEdit: TextEditorEdit
-        ): void {
-    if (!line.text.endsWith("{")) {
-        textEditorEdit.insert(line.range.end, braces);
+function insert_braces(braces: string, line: TextLine,
+                        textEditorEdit: TextEditorEdit
+                      ): void
+{
+    // It is difficult to test allman style, so we just test java style.
+    if (!line.text.endsWith("{"))
+    {
+        textEditorEdit.insert(line.range.end, braces)
     }
 }
 
