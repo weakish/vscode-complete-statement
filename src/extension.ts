@@ -174,14 +174,6 @@ function looks_like_complex_structure(line: TextLine): boolean
     {
         return true
     }
-    // function
-    else if (trimmed.startsWith('function ') || // javascript
-             trimmed.startsWith('func ') || // swift
-             trimmed.startsWith('fun ') || // kotlin
-             trimmed.startsWith('def ')) // scala
-    {
-        return true
-    }
     // if else
     else if (trimmed.startsWith('if (') ||
              trimmed.startsWith('if(') ||
@@ -202,6 +194,16 @@ function looks_like_complex_structure(line: TextLine): boolean
              trimmed.startsWith('while (') ||
              trimmed.startsWith('while(') ||
              trimmed.startsWith('do'))
+    {
+        return true
+    }
+    // function
+    else if (trimmed.startsWith('function ') || // javascript
+             trimmed.startsWith('func ') || // swift
+             trimmed.startsWith('fun ') || // kotlin
+             trimmed.startsWith('def ') || // scala
+             // Regexp is expensive, so we test it after other structures.
+             /^\w+\s\w+\s?\(/.test(trimmed)) // c, java, ceylon
     {
         return true
     }

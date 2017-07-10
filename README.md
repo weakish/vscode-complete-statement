@@ -81,9 +81,7 @@ Bugs
 
     For example, it cannot completes `if` with multiple line conditions.
     Also it cannot complete functions in C.
-    The "parsing" is *very naive*, it does not even use regex.
-    The naive "parsing" is probably good at performance,
-    at the cost of only covering limited conditions.
+    The "parsing" is *very naive*, only covering limited conditions.
 
 - Indented with tab is not supported yet. Pull request is welcome.
 
