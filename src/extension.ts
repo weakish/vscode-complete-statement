@@ -244,11 +244,15 @@ function insert_semicolon_at_line_end(line: TextLine,
     insert_at_end(';', line, textEditorEdit)
 }
 
-    function insert_at_end(character: string,
-                        line: TextLine, textEditorEdit: TextEditorEdit
-                        ): void
+function insert_at_end(character: string,
+                       line: TextLine, textEditorEdit: TextEditorEdit
+                      ): void
 {
-    if (!line.text.endsWith(character)) {
+    if (line.text.endsWith(character)) {
+        textEditorEdit.insert(line.range.end, '\n')
+    }
+    else
+    {
         textEditorEdit.insert(line.range.end, character)
     }
 }

@@ -33,8 +33,9 @@ let a_number: number][ = 2
 // press `ctrl+;` (`cmd+;` on mac)
 let a_number: number = 2;][
 let semicolon: string][ = "already exist";
-// press `ctrl+;`, just move cursor to the end
-let semicolon: string = "already exist";][
+// `ctrl+;` will start an new blank line
+let semicolon: string = "already exist";
+][
 function works_too(para: number][)
 // `ctrl+;`
 function works_too(para: number) {][
