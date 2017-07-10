@@ -167,7 +167,14 @@ function looks_like_json(line: TextLine): boolean
 function looks_like_complex_structure(line: TextLine): boolean
 {
     const trimmed: string = line.text.trim()
-    if (trimmed.startsWith('function '))
+    // class and object
+    if (trimmed.startsWith('class ') ||
+        trimmed.startsWith('interface ') ||
+        trimmed.startsWith('object '))
+    {
+        return true
+    }
+    else if (trimmed.startsWith('function '))
     {
         return true
     }
