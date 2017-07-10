@@ -164,32 +164,39 @@ function looks_like_json(line: TextLine): boolean
     }
 }
 
-function looks_like_complex_structure(line: TextLine): boolean {
-    if (line.text.includes("function ")) { // function
-        return true;
-    } else if ( // if else
-            line.text.includes("if (") ||
-            line.text.includes("if(") ||
-            line.text.includes("} else") ||
-            line.text.includes("else ")
-            ) {
-        return true;
-    } else if ( // switch
-            line.text.includes("switch (") ||
-            line.text.includes("switch(")
-            ) {
-        return true;
-    } else if ( // loop
-            line.text.includes("for (") ||
-            line.text.includes("for(") ||
-            line.text.includes("while (") ||
-            line.text.includes("while(") ||
-            line.text.endsWith("do") || // `endsWith` to avoid too many false positive.
-            line.text.endsWith("do ")
-            ) {
-        return true;
-    } else {
-        return false;
+function looks_like_complex_structure(line: TextLine): boolean
+{
+    const trimmed: string = line.text.trim()
+    if (trimmed.startsWith('function '))
+    {
+        return true
+    }
+    // if else
+    else if (trimmed.startsWith('if (') ||
+             trimmed.startsWith('if(') ||
+             trimmed.startsWith('} else') ||
+             trimmed.startsWith('else'))
+    {
+        return true
+    }
+    // switch
+    else if (trimmed.startsWith('switch (') ||
+             trimmed.startsWith('switch('))
+    {
+        return true
+    }
+    // loop
+    else if (trimmed.startsWith('for (') ||
+             trimmed.startsWith('for(') ||
+             trimmed.startsWith('while (') ||
+             trimmed.startsWith('while(') ||
+             trimmed.startsWith('do'))
+    {
+        return true
+    }
+    else
+    {
+        return false
     }
 }
 
