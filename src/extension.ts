@@ -36,7 +36,6 @@ function complete_statement(textEditor: TextEditor,
     if (looks_like_json(current_line))
     {
         insert_comma_at_line_end(current_line, textEditorEdit)
-        textEditor.selection = goto_line_end(current_line, textEditor)
     }
     else if (looks_like_complex_structure(current_line))
     {
@@ -88,13 +87,12 @@ function complete_statement(textEditor: TextEditor,
         // The position within the inserted string will be unreachable.
         //
         // See [#11841](https://github.com/Microsoft/vscode/issues/11841)
-        current_line = textEditor.document.lineAt(current_line_number)
-        textEditor.selection = goto_line_end(current_line, textEditor, 2)
-    } else
+    }
+    else
     {
         insert_semicolon_at_line_end(current_line, textEditorEdit)
-        textEditor.selection = goto_line_end(current_line, textEditor)
     }
+    commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
 }
 
 function looks_like_key(text: string, quote: string): boolean
@@ -266,13 +264,4 @@ function insert_braces(braces: string, line: TextLine,
     {
         textEditorEdit.insert(line.range.end, braces)
     }
-}
-
-function goto_line_end(
-        line: TextLine,
-        textEditor: TextEditor,
-        offset: number = 0): Selection {
-    const line_number = line.lineNumber;
-    const end: number = line.range.end.character - offset;
-    return new Selection(line_number, end, line_number, end);
 }
