@@ -27,7 +27,18 @@
         "when": "editorTextFocus",
         "command": "extension.complete-statement"
       }
-    ]
+    ],
+    "configuration": {
+        "type": "object",
+        "title": "complete-statement",
+        "properties": {
+            "complete-statement": {
+                "type": "boolean",
+                "default": false,
+                "description": "Allman style (beginning brace on its own line)."
+            }
+        }
+    }
   },
   "main": "./out/src/extension",
   "scripts": {
