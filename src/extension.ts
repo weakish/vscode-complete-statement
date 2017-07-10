@@ -251,7 +251,14 @@ function insert_at_end(character: string,
     }
     else
     {
-        textEditorEdit.insert(line.range.end, character)
+        if (character === ',') // always insert blank line for javascript object
+        {
+            textEditorEdit.insert(line.range.end, ',\n')
+        }
+        else
+        {
+            textEditorEdit.insert(line.range.end, character)
+        }
     }
 }
 
