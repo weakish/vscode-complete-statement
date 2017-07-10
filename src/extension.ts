@@ -174,7 +174,11 @@ function looks_like_complex_structure(line: TextLine): boolean
     {
         return true
     }
-    else if (trimmed.startsWith('function '))
+    // function
+    else if (trimmed.startsWith('function ') || // javascript
+             trimmed.startsWith('func ') || // swift
+             trimmed.startsWith('fun ') || // kotlin
+             trimmed.startsWith('def ')) // scala
     {
         return true
     }
