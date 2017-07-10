@@ -41,7 +41,7 @@ function works_too(para: number][)
 function works_too(para: number) {][
 
 }
-// `down` arrow key
+// press `ctrl+;` again or `down` arrow key
 function works_too(para: number) {
     ][
 }
@@ -83,7 +83,8 @@ add the following line in settings:
 Bugs
 ----
 
-- As mentioned above, complete structure (if, for, etc) requires `down` arrow key.
+- As mentioned above, complete structure (if, for, etc) requires an addtional `ctrl+;`
+  to move the cursor.
 
     It will not auto moves to the start of next line like IntelliJ.
     Read the source code or [#11841] for more information.

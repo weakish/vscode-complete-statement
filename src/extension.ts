@@ -36,63 +36,81 @@ function complete_statement(textEditor: TextEditor,
     if (looks_like_json(current_line))
     {
         insert_comma_at_line_end(current_line, textEditorEdit)
+        commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
+    }
+    else if (current_line.text.trim() === '}')
+    {
+        commands.executeCommand('cursorMove', {'to': 'up'})
+        commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
     }
     else if (looks_like_complex_structure(current_line))
     {
-        // Assuming use spaces to indent.
-        const tab_stop: number = getConfiguration('editor').get('tabSize', 4)
-        let indent_level: number
-        if  (current_line.text.startsWith(" ")) // indented
+        if (current_line.text.endsWith('{'))
         {
-            const indent_position: number =
-                    current_line.text.lastIndexOf(" ".repeat(tab_stop))
-            indent_level = indent_position / tab_stop + 1
-        } else
-        {
-            indent_level = 0
-        }
-        const indent_space_count: number = tab_stop * (indent_level + 1)
-        const indent_spaces: string = " ".repeat(indent_space_count)
-        const less_indent_spaces: string = " ".repeat(tab_stop * indent_level)
-        let braces: string
-        const allman: boolean =
-                getConfiguration('complete-statement').get('allman', false)
-        if (allman)
-        {
-            braces = `\n${less_indent_spaces}{\n${indent_spaces}\n${less_indent_spaces}}`
+            commands.executeCommand('cursorMove', {'to': 'down'})
+            commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
         }
         else
         {
-            braces = `{\n${indent_spaces}\n${less_indent_spaces}}`
-            if (current_line.text.endsWith(" ")) // avoid duplicated spaces
+            // Assuming use spaces to indent.
+            const tab_stop: number = getConfiguration('editor').get('tabSize', 4)
+            let indent_level: number
+            if (current_line.text.startsWith(' ')) // indented
             {
-                // pass
+                const indent_position: number =
+                        current_line.text.lastIndexOf(" ".repeat(tab_stop))
+                indent_level = indent_position / tab_stop + 1
+            } else
+            {
+                indent_level = 0
+            }
+            const indent_space_count: number = tab_stop * (indent_level + 1)
+            const indent_spaces: string = " ".repeat(indent_space_count)
+            const less_indent_spaces: string = " ".repeat(tab_stop * indent_level)
+            let braces: string
+            const allman: boolean =
+                    getConfiguration('complete-statement').get('allman', false)
+            if (allman)
+            {
+                braces = `\n${less_indent_spaces}{\n${indent_spaces}` +
+                        `\n${less_indent_spaces}}`
+                textEditorEdit.insert(current_line.range.end, braces)
+                commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
             }
             else
             {
-                braces = ` ${braces}`;
+                braces = `{\n${indent_spaces}\n${less_indent_spaces}}`
+                if (current_line.text.endsWith(" ")) // avoid duplicated spaces
+                {
+                    // pass
+                }
+                else
+                {
+                    braces = ` ${braces}`;
+                }
+                textEditorEdit.insert(current_line.range.end, braces)
+                commands.executeCommand('cursorMove', {'to': 'left'})
             }
+            // Unlike IntelliJ, it does not go to the start (`^` in vim) of new line.
+            // You have to press `down` arrow key.
+            // Why?
+            // Inserting a multi-line string seems confusing vscode.
+            // If we create a new selection of current line and its `range.end`,
+            // the cursor will be at the end of inserted string, a.k.a. `}`.
+            // If we try to go backward,
+            // creating a new selection of current line and its `range.end - n`,
+            // then the `range.end` will still be the original end (before insert),
+            // thus it will go backward n characters from the original end.
+            // The position within the inserted string will be unreachable.
+            //
+            // See [#11841](https://github.com/Microsoft/vscode/issues/11841)
         }
-        insert_braces(braces, current_line, textEditorEdit)
-        // Unlike IntelliJ, it does not go to the start (`^` in vim) of new line.
-        // You have to press `down` arrow key.
-        // Why?
-        // Inserting a multi-line string seems confusing vscode.
-        // If we create a new selection of current line and its `range.end`,
-        // the cursor will be at the end of inserted string, a.k.a. `}`.
-        // If we try to go backward,
-        // creating a new selection of current line and its `range.end - n`,
-        // then the `range.end` will still be the original end (before insert),
-        // thus it will go backward n characters from the original end.
-        // The position within the inserted string will be unreachable.
-        //
-        // See [#11841](https://github.com/Microsoft/vscode/issues/11841)
     }
     else
     {
         insert_semicolon_at_line_end(current_line, textEditorEdit)
+        commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
     }
-    commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
 }
 
 function looks_like_key(text: string, quote: string): boolean
@@ -259,16 +277,5 @@ function insert_at_end(character: string,
         {
             textEditorEdit.insert(line.range.end, character)
         }
-    }
-}
-
-function insert_braces(braces: string, line: TextLine,
-                        textEditorEdit: TextEditorEdit
-                      ): void
-{
-    // It is difficult to test allman style, so we just test java style.
-    if (!line.text.endsWith("{"))
-    {
-        textEditorEdit.insert(line.range.end, braces)
     }
 }
