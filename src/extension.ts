@@ -1,25 +1,15 @@
-'use strict';
-import { ExtensionContext } from 'vscode';
-import { Disposable } from 'vscode';
-import { TextEditor } from 'vscode';
-import { TextEditorEdit } from 'vscode';
-import { TextLine } from 'vscode';
-import { Selection } from 'vscode';
-import { Position } from 'vscode';
-import { commands } from 'vscode';
-import { workspace } from 'vscode';
-import getConfiguration = workspace.getConfiguration;
+import * as vscode from 'vscode';
 
 
-export function activate(extensionContext: ExtensionContext) {
+export function activate(extensionContext: vscode.ExtensionContext) {
 
     console.log('"complete-statement" is activated.');
 
-    const disposable: Disposable =
-            commands.registerTextEditorCommand(
+    const disposable: vscode.Disposable =
+            vscode.commands.registerTextEditorCommand(
                     'extension.complete-statement',
                     (textEditor, textEditorEdit) =>
-                        complete_statement(textEditor, textEditorEdit)
+                        { complete_statement(textEditor, textEditorEdit) }
             );
     extensionContext.subscriptions.push(disposable);
 }
@@ -27,40 +17,41 @@ export function deactivate() {
     console.log('"complete-statement" is deactivated.');
 }
 
-function complete_statement(textEditor: TextEditor,
-                            textEditorEdit: TextEditorEdit
+function complete_statement(textEditor: vscode.TextEditor,
+                            textEditorEdit: vscode.TextEditorEdit
                            ): void
 {
     let current_line_number: number = textEditor.selection.start.line
-    let current_line: TextLine = textEditor.document.lineAt(current_line_number)
+    let current_line: vscode.TextLine = textEditor.document.lineAt(current_line_number)
     if (looks_like_json(current_line))
     {
         insert_comma_at_line_end(current_line, textEditorEdit)
-        commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
+        vscode.commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
     }
     else if (current_line.text.trim() === '}')
     {
-        commands.executeCommand('cursorMove', {'to': 'up'})
-        commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
+        vscode.commands.executeCommand('cursorMove', {'to': 'up'})
+        vscode.commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
     }
     else if (looks_like_complex_structure(current_line))
     {
         if (current_line.text.endsWith('{'))
         {
-            commands.executeCommand('cursorMove', {'to': 'down'})
-            commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
+            vscode.commands.executeCommand('cursorMove', {'to': 'down'})
+            vscode.commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
         }
         else
         {
             // Assuming use spaces to indent.
-            const tab_stop: number = getConfiguration('editor').get('tabSize', 4)
+            const tab_stop: number = vscode.workspace.getConfiguration('editor').get('tabSize', 4)
             let indent_level: number
             if (current_line.text.startsWith(' ')) // indented
             {
                 const indent_position: number =
                         current_line.text.lastIndexOf(" ".repeat(tab_stop))
                 indent_level = indent_position / tab_stop + 1
-            } else
+            }
+            else
             {
                 indent_level = 0
             }
@@ -69,13 +60,13 @@ function complete_statement(textEditor: TextEditor,
             const less_indent_spaces: string = " ".repeat(tab_stop * indent_level)
             let braces: string
             const allman: boolean =
-                    getConfiguration('complete-statement').get('allman', false)
+                    vscode.workspace.getConfiguration('complete-statement').get('allman', false)
             if (allman)
             {
                 braces = `\n${less_indent_spaces}{\n${indent_spaces}` +
                         `\n${less_indent_spaces}}`
                 textEditorEdit.insert(current_line.range.end, braces)
-                commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
+                vscode.commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
             }
             else
             {
@@ -89,7 +80,7 @@ function complete_statement(textEditor: TextEditor,
                     braces = ` ${braces}`;
                 }
                 textEditorEdit.insert(current_line.range.end, braces)
-                commands.executeCommand('cursorMove', {'to': 'left'})
+                vscode.commands.executeCommand('cursorMove', {'to': 'left'})
             }
             // Unlike IntelliJ, it does not go to the start (`^` in vim) of new line.
             // You have to press `down` arrow key.
@@ -109,7 +100,7 @@ function complete_statement(textEditor: TextEditor,
     else
     {
         insert_semicolon_at_line_end(current_line, textEditorEdit)
-        commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
+        vscode.commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
     }
 }
 
@@ -134,7 +125,7 @@ function looks_like_key(text: string, quote: string): boolean
     }
 }
 
-function looks_like_json(line: TextLine): boolean
+function looks_like_json(line: vscode.TextLine): boolean
 {
     // `Class::method`
     if (line.text.includes('::'))
@@ -197,7 +188,7 @@ function looks_like_json(line: TextLine): boolean
     }
 }
 
-function looks_like_complex_structure(line: TextLine): boolean
+function looks_like_complex_structure(line: vscode.TextLine): boolean
 {
     const trimmed: string = line.text.trim()
     // class and object
@@ -246,22 +237,22 @@ function looks_like_complex_structure(line: TextLine): boolean
     }
 }
 
-function insert_comma_at_line_end(line: TextLine,
-                                  textEditorEdit: TextEditorEdit
+function insert_comma_at_line_end(line: vscode.TextLine,
+                                  textEditorEdit: vscode.TextEditorEdit
                                  ): void
 {
     insert_at_end(',', line, textEditorEdit)
 }
 
-function insert_semicolon_at_line_end(line: TextLine,
-                                      textEditorEdit: TextEditorEdit
+function insert_semicolon_at_line_end(line: vscode.TextLine,
+                                      textEditorEdit: vscode.TextEditorEdit
                                      ): void
 {
     insert_at_end(';', line, textEditorEdit)
 }
 
 function insert_at_end(character: string,
-                       line: TextLine, textEditorEdit: TextEditorEdit
+                       line: vscode.TextLine, textEditorEdit: vscode.TextEditorEdit
                       ): void
 {
     if (line.text.endsWith(character)) {
