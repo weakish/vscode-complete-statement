@@ -1,20 +1,20 @@
-import * as vscode from 'vscode';
+import * as vscode from 'vscode'
 
 
 export function activate(extensionContext: vscode.ExtensionContext) {
 
-    console.log('"complete-statement" is activated.');
+    console.log('"complete-statement" is activated.')
 
     const disposable: vscode.Disposable =
             vscode.commands.registerTextEditorCommand(
                     'extension.complete-statement',
                     (textEditor, textEditorEdit) =>
                         { complete_statement(textEditor, textEditorEdit) }
-            );
-    extensionContext.subscriptions.push(disposable);
+            )
+    extensionContext.subscriptions.push(disposable)
 }
 export function deactivate() {
-    console.log('"complete-statement" is deactivated.');
+    console.log('"complete-statement" is deactivated.')
 }
 
 function complete_statement(textEditor: vscode.TextEditor,
@@ -77,7 +77,7 @@ function complete_statement(textEditor: vscode.TextEditor,
                 }
                 else
                 {
-                    braces = ` ${braces}`;
+                    braces = ` ${braces}`
                 }
                 textEditorEdit.insert(current_line.range.end, braces)
                 vscode.commands.executeCommand('cursorMove', {'to': 'left'})
