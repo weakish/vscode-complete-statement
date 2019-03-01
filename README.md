@@ -8,6 +8,15 @@ In other words:
 
 Works with languages with a C style syntax.
 
+Install
+-------
+
+The version on marketplace is outdated.
+Please download the vsix file at [GitHub releases page][releases],
+and manually install it via vscode > Extensions > Install from VSIX...
+
+[releases]: https://github.com/weakish/vscode-complete-statement/releases
+
 Key binding
 -----------
 
