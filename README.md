@@ -33,9 +33,9 @@ let a_number: number][ = 2
 // press `ctrl+;` (`cmd+;` on mac)
 let a_number: number = 2;][
 let semicolon: string][ = "already exist";
-// `ctrl+;` will start an new blank line
-let semicolon: string = "already exist";
-][
+// `ctrl+;` will insert an new blank line
+let semicolon: string = "already exist";][
+
 function works_too(para: number][)
 // `ctrl+;`
 function works_too(para: number) {][
@@ -56,6 +56,11 @@ function works_too(para: number) {
     }
 }
 ```
+
+The above example uses TypeScript,
+but this extension works under most languages with a C like style,
+such as JavaScript, Swift, Kotlin, Scala, Java, Ceylon,
+and C itself.
 
 Configuration
 -------------
@@ -81,7 +86,6 @@ Bugs
   So complete structure may not work as you expected.
 
     For example, it cannot completes `if` with multiple line conditions.
-    Also it cannot complete functions in C.
     The "parsing" is *very naive*, only covering limited conditions.
 
 - Indented with tab is not supported yet. Pull request is welcome.

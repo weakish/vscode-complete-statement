@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.2.0
+
+- Support functions in more languages such as Swift, Kotlin, Go, Scala, C.
+- Support class, interface, object.
+- Insert a blank line on a line already ending with ';'.
+- Press `ctrl+;` again to move cursor to next line for complex structure.
+- Support Allman style.
+- Migrate vscode engine from 1.4 to 1.31
+
 ## 0.1.0
 
 - Migrate to TypeScript 2.
