@@ -55,18 +55,6 @@ function works_too(para: number) {
 
     }
 }
-// Complete JavaScript object notation with `,`
-{
-    a: 1][
-}
-// `ctrl+;`
-{
-    a: 1,][
-}
-// Complete one line JavaScript object with `;`
-{ a: 1, b: 2 ][}
-// `ctrl+;`
-{ a: 1, b: 2 };
 ```
 
 Configuration

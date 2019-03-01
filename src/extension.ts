@@ -23,12 +23,7 @@ function complete_statement(textEditor: vscode.TextEditor,
 {
     let current_line_number: number = textEditor.selection.start.line
     let current_line: vscode.TextLine = textEditor.document.lineAt(current_line_number)
-    if (looks_like_json(current_line))
-    {
-        insert_comma_at_line_end(current_line, textEditorEdit)
-        vscode.commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
-    }
-    else if (current_line.text.trim() === '}')
+    if (current_line.text.trim() === '}')
     {
         vscode.commands.executeCommand('cursorMove', {'to': 'up'})
         vscode.commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
@@ -104,89 +99,6 @@ function complete_statement(textEditor: vscode.TextEditor,
     }
 }
 
-function looks_like_key(text: string, quote: string): boolean
-{
-    if (text.length === 1)
-    {
-        return false
-    }
-    else if (text.endsWith(`\${quote}`))
-    {
-        // Ignore rare valid forms like `'\\': 1`.
-        return false
-    }
-    else if (text.endsWith(quote))
-    {
-        return true
-    }
-    else
-    {
-        return false
-    }
-}
-
-function looks_like_json(line: vscode.TextLine): boolean
-{
-    // `Class::method`
-    if (line.text.includes('::'))
-    {
-        return false
-    }
-    // { 'a': 1, 'b': 2 }
-    else if (line.text.includes('{') || line.text.includes('}'))
-    {
-        return false
-    }
-    // a: 1
-    else if (line.text.includes(':'))
-    {
-        // Exclude `:` in strings.
-        const colon_position: number = line.text.indexOf(':')
-        const before_colon: string = line.text.slice(0, colon_position)
-        if (before_colon.includes("'") ||
-            before_colon.includes('"') ||
-            before_colon.includes('`'))
-        {
-            const trimmed_before_colon = before_colon.trim()
-            if (trimmed_before_colon.startsWith('"'))
-            {
-                return looks_like_key(trimmed_before_colon, '"')
-            }
-            else if (trimmed_before_colon.startsWith("'"))
-            {
-                return looks_like_key(trimmed_before_colon, "'")
-            }
-            else if (trimmed_before_colon.startsWith("`"))
-            {
-                return looks_like_key(trimmed_before_colon, "`")
-            }
-            else if (trimmed_before_colon.startsWith('['))
-            {
-                if (trimmed_before_colon.endsWith(']'))
-                {
-                    // Ignore rare non literal object forms like `["a", "]:"]`.
-                    return true
-                }
-                else
-                {
-                    return false
-                }
-            }
-            else
-            {
-                return false
-            }
-        }
-        else
-        {
-            return true
-        }
-    }
-    else
-    {
-        return false
-    }
-}
 
 function looks_like_complex_structure(line: vscode.TextLine): boolean
 {
@@ -235,13 +147,6 @@ function looks_like_complex_structure(line: vscode.TextLine): boolean
     {
         return false
     }
-}
-
-function insert_comma_at_line_end(line: vscode.TextLine,
-                                  textEditorEdit: vscode.TextEditorEdit
-                                 ): void
-{
-    insert_at_end(',', line, textEditorEdit)
 }
 
 function insert_semicolon_at_line_end(line: vscode.TextLine,
