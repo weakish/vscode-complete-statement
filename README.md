@@ -4,8 +4,6 @@ Mimic IntelliJ's complete statement.
 In other words:
 
 - Complete normal statement with `;` and move to line end.
-- Try to complete JavaScript object notation
-  (or similar structure in other languages) with `,` and move to line end.
 - Try to complete complex structures with braces.
 
 Works with languages with a C style syntax.
