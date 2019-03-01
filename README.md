@@ -71,7 +71,7 @@ add the following line in settings:
 Bugs
 ----
 
-- As mentioned above, complete structure (if, for, etc) requires an addtional `ctrl+;`
+- As mentioned above, complete structure (if, for, etc) requires an additional `ctrl+;`
   to move the cursor.
 
     It will not auto moves to the start of next line like IntelliJ.
