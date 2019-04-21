@@ -3,7 +3,7 @@ Complete Statement with semicolon, comma or braces in vscode.
 Mimic IntelliJ's complete statement.
 In other words:
 
-- Complete normal statement with `;` and move to line end.
+- Complete normal statement with `;`, insert a newline and move down.
 - Try to complete complex structures with braces.
 
 Works with languages with a C style syntax.
@@ -38,17 +38,14 @@ We use `][` to represent cursor.
 let a_number = 2][ # decide to specify type
 let a_number: number][ = 2
 // press `ctrl+;` (`cmd+;` on mac)
-let a_number: number = 2;][
+let a_number: number = 2;
+][
 let semicolon: string][ = "already exist";
-// `ctrl+;` will insert an new blank line
-let semicolon: string = "already exist";][
-
+// `ctrl+;`
+let semicolon: string = "already exist";
+][
 function works_too(para: number][)
 // `ctrl+;`
-function works_too(para: number) {][
-
-}
-// press `ctrl+;` again or `down` arrow key
 function works_too(para: number) {
     ][
 }
@@ -58,16 +55,18 @@ function works_too(para: number) {
 }
 // `ctrl+;`
 function works_too(para: number) {
-    if (a_number == 1) {][
-
+    if (a_number == 1) {
+        ][
     }
 }
 ```
 
 The above example uses TypeScript,
-but this extension works under most languages with a C like style,
-such as JavaScript, Swift, Kotlin, Scala, Java, Ceylon,
-and C itself.
+but this extension works in most languages with a C like style,
+such as JavaScript, Java, Ceylon, and C itself.
+This extension also works in languages like Kotlin, Scala, Swift, and so on.
+But I recommend you only use it to complete complete structures,
+not single statement since it will append a semicolon (`;`) at the end.
 
 Configuration
 -------------
@@ -83,12 +82,6 @@ add the following line in settings:
 Bugs
 ----
 
-- As mentioned above, complete structure (if, for, etc) requires an additional `ctrl+;`
-  to move the cursor.
-
-    It will not auto moves to the start of next line like IntelliJ.
-    Read the source code or [#11841] for more information.
-
 - This extension does not understand semantics of programming languages.
   So complete structure may not work as you expected.
 
@@ -96,8 +89,6 @@ Bugs
     The "parsing" is *very naive*, only covering limited conditions.
 
 - Indented with tab is not supported yet. Pull request is welcome.
-
-[#11841]: https://github.com/Microsoft/vscode/issues/11841
 
 License
 -------

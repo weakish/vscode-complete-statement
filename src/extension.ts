@@ -87,20 +87,6 @@ function complete_statement(textEditor: vscode.TextEditor,
                 textEditorEdit.insert(current_line.range.end, braces)
             }
             
-            // Unlike IntelliJ, it does not go to the start (`^` in vim) of new line.
-            // You have to press `down` arrow key.
-            // Why?
-            // Inserting a multi-line string seems confusing vscode.
-            // If we create a new selection of current line and its `range.end`,
-            // the cursor will be at the end of inserted string, a.k.a. `}`.
-            // If we try to go backward,
-            // creating a new selection of current line and its `range.end - n`,
-            // then the `range.end` will still be the original end (before insert),
-            // thus it will go backward n characters from the original end.
-            // The position within the inserted string will be unreachable.
-            //
-            // See [#11841](https://github.com/Microsoft/vscode/issues/11841)
-
             // Move the cursor into the newly created block.
             if (is_at_end) {
                 vscode.commands.executeCommand('cursorMove', {'to': 'up'})
