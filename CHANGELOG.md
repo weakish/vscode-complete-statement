@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.0
+
+- Create a new line after completion and move the cursor down.
+
 ## 0.2.0
 
 - Support functions in more languages such as Swift, Kotlin, Go, Scala, C.
