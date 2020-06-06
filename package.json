@@ -2,7 +2,7 @@
   "name": "complete-statement",
   "displayName": "Complete Statement",
   "description": "complete statement for languages with a syntax similar to C",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "weakish",
   "engines": {
     "vscode": "^1.31.0"
@@ -44,14 +44,12 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
+    "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
-    "typescript": "^3.3.1",
-    "vscode": "^1.1.28",
-    "tslint": "^5.12.1",
-    "@types/node": "^10.12.21"
+    "typescript": "^3.9.2",
+    "@types/vscode": "^1.45.1",
+    "@types/node": "^12.12.0"
   },
   "license": "0BSD",
   "repository": {
@@ -80,5 +78,6 @@
       "href": "http://www.typescriptlang.org/"
     }
   ],
-  "preview": true
+  "preview": true,
+  "dependencies": {}
 }
