@@ -138,15 +138,18 @@ function looks_like_complex_structure(line: vscode.TextLine): boolean
              trimmed.startsWith('for(') ||
              trimmed.startsWith('while (') ||
              trimmed.startsWith('while(') ||
-             trimmed.startsWith('do'))
+             trimmed.startsWith('do') ||
+             trimmed.startsWith('loop'))
     {
         return true
     }
     // function
-    else if (trimmed.startsWith('function ') || // javascript
+    else if (
+             trimmed.startsWith('function ') || // javascript
              trimmed.startsWith('func ') || // swift
              trimmed.startsWith('fun ') || // kotlin
              trimmed.startsWith('def ') || // scala
+             trimmed.startsWith('fn ') || // rust
              // Regexp is expensive, so we test it after other structures.
              /^\w+\s\w+\s?\(/.test(trimmed)) // c, java, ceylon
     {
