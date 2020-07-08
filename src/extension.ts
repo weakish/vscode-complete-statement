@@ -38,6 +38,15 @@ function complete_statement(textEditor: vscode.TextEditor,
     const indent_space_count: number = tab_stop * (indent_level + 1)
     const indent_spaces: string = " ".repeat(indent_space_count)
     const less_indent_spaces: string = " ".repeat(tab_stop * indent_level)
+    const is_at_end = (): boolean => {
+        const editor = vscode.window.activeTextEditor
+        if (editor) {
+            let position: vscode.Position = editor.selection.active
+            return position.character == current_line.range.end.character
+        } else {
+            return false
+        }
+    }
     
     if (current_line.text.trim() === '}')
     {
@@ -78,7 +87,8 @@ function complete_statement(textEditor: vscode.TextEditor,
             
             // After completion, vscode will move the cursor to the end of the added text
             // if the cursor is currently at the end of the line, otherwise the cursor
-            // stays on the current line.  Figure out is_at_end here.  
+            // stays on the current line.
+            // Figure out is_at_end here. 
             // Move the cursor into the newly created block.
             if (is_at_end()) {
                 vscode.commands.executeCommand('cursorMove', {'to': 'up'})
@@ -95,26 +105,14 @@ function complete_statement(textEditor: vscode.TextEditor,
             textEditorEdit.insert(current_line.range.end, ';')
         }
 
-        // If the cursor is currently at the end of the line,
-        // vscode will move it to the end of the new line .
         textEditorEdit.insert(current_line.range.end, '\n' + less_indent_spaces)
-        // Check it and the cursor won't be moved two lines down.
+        // If the cursor is currently at the end of the line,
+        // vscode will move it to the end of the next line after insertion.
+        // Otherwise we will move the cursor ourselves.
         if(!is_at_end()) {
             vscode.commands.executeCommand('cursorMove', {'to': 'down'})
             vscode.commands.executeCommand('cursorMove', {'to': 'wrappedLineEnd'})
         }
-    }
-
-    // This function uses the variable: current_line,
-    // so it is a inner function.
-    function is_at_end(): boolean
-    {
-        const editor = vscode.window.activeTextEditor
-        if (editor) {
-            let position : vscode.Position = editor.selection.active
-            return position.character == current_line.range.end.character
-        }
-        return false
     }
 }
 
