@@ -17,6 +17,13 @@ and manually install it via vscode > Extensions > Install from VSIX...
 
 [releases]: https://github.com/weakish/vscode-complete-statement/releases
 
+If you want to try the cutting-edge version (`master`),
+you can clone this repository, and package it yourself:
+
+```sh
+npx vsce package
+```
+
 Key binding
 -----------
 
