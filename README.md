@@ -1,4 +1,4 @@
-Complete Statement with semicolon, comma or braces in vscode.
+Complete Statement with semicolon in vscode.
 
 Mimic IntelliJ's complete statement.
 In other words:
@@ -12,9 +12,12 @@ Install
 -------
 
 The version on marketplace is outdated.
-Please download the vsix file at [GitHub releases page][releases],
-and manually install it via vscode > Extensions > Install from VSIX...
+Please use [the version on open-vsx.org] ([vscodium] uses open-vsx by default).
+You can also download the vsix file at [GitHub releases page][releases],
+and manually install it via "vscode > Extensions > Install from VSIX...".
 
+[open-vsx.org]: https://open-vsx.org/extension/weakish/complete-statement
+[vscodium]: https://vscodium.com/
 [releases]: https://github.com/weakish/vscode-complete-statement/releases
 
 If you want to try the cutting-edge version (`master`),

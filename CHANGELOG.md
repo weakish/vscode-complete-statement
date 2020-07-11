@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.0
+
+- Fix an issue that complete statement will move down one extra line when the cursor is at the end of the line.
+- Supports two new keywords: loop & fn (used in Rust).
+- Publish to open-vsx.org
+
 ## 0.3.0
 
 - Create a new line after completion and move the cursor down.
