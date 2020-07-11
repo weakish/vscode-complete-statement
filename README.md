@@ -12,11 +12,11 @@ Install
 -------
 
 The version on marketplace is outdated.
-Please use [the version on open-vsx.org] ([vscodium] uses open-vsx by default).
+Please use [the version on open-vsx.org][open-vsx] ([vscodium] uses open-vsx by default).
 You can also download the vsix file at [GitHub releases page][releases],
 and manually install it via "vscode > Extensions > Install from VSIX...".
 
-[open-vsx.org]: https://open-vsx.org/extension/weakish/complete-statement
+[open-vsx]: https://open-vsx.org/extension/weakish/complete-statement
 [vscodium]: https://vscodium.com/
 [releases]: https://github.com/weakish/vscode-complete-statement/releases
 
