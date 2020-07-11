@@ -78,6 +78,6 @@
       "href": "http://www.typescriptlang.org/"
     }
   ],
-  "preview": true,
+  "preview": false,
   "dependencies": {}
 }
