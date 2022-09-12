@@ -8,6 +8,19 @@ In other words:
 
 Works with languages with a C style syntax.
 
+Status
+------
+
+This project is orphaned.
+I switched to Neovim as my mainly used editor.
+I still use vscode occasionally,
+but for languages not requiring a semicolon to end a statement.
+
+Pull requests are still welcome, though.
+And if you want to maintain this project,
+please open an issue or send a pull request,
+I will add you to the collaborators of the source code repository.
+
 Install
 -------
 
