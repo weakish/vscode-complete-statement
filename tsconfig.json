@@ -7,15 +7,15 @@
       "es6"
     ],
     "sourceMap": true,
-    "rootDir": "src",
+    "rootDir": "./",
     "strict": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
-  "exclude": [
-    "node_modules",
-    ".vscode-test"
+  "include": [
+    "src/**/*",
+    "tests/**/*"
   ]
 }
