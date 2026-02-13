@@ -1,30 +1,37 @@
-// Available variables which can be used inside of strings.
-// ${workspaceRoot}: the root folder of the team
-// ${file}: the current opened file
-// ${fileBasename}: the current opened file's basename
-// ${fileDirname}: the current opened file's dirname
-// ${fileExtname}: the current opened file's extension
-// ${cwd}: the current working directory of the spawned process
-
-// A task runner that calls a custom npm script that compiles the extension.
+// -*- mode: jsonc -*-
 {
-    "version": "0.1.0",
-
-    // we want to run npm
-    "command": "npm",
-
-    // the command is a shell script
-    "isShellCommand": true,
-
-    // show the output window only if unrecognized errors occur.
-    "showOutput": "silent",
-
-    // we run the custom script "compile" as defined in package.json
-    "args": ["run", "compile", "--loglevel", "silent"],
-
-    // The tsc compiler is started in watching mode
-    "isWatching": true,
-
-    // use the standard tsc in watch mode problem matcher to find compile problems in the output.
-    "problemMatcher": "$tsc-watch"
+    // Predefined variables that can be used inside of strings:
+    // ${workspaceRoot}: @deprecated
+    // ${workspaceFolder}: a root folder
+    // ${file}: a current opened file
+    // ${fileBasename}: a current opened file's basename
+    // ${fileDirname}: a current opened file's dirname
+    // ${fileExtname}: a current opened file's extension
+    // ${cwd}: a current working directory of the spawned process
+    //
+    // A task runner that calls a custom npm script that compiles the extension
+    "version": "2.0.0",
+    "command": "npm", // we want to run npm
+    "args": ["run", "compile", "--loglevel", "silent"], // we run the custom "compile" as defined in package.json
+    "isWatching": true, // The tsc compiler is started in watching mode
+    "problemMatcher": "$tsc-watch", // use the standard tsc in watch mode problem matcher to find compile problems in the output
+    "tasks": [
+        {
+            "label": "npm",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "compile",
+                "--loglevel",
+                "silent"
+            ],
+            "isBackground": true,
+            "problemMatcher": "$tsc-watch",
+            "group": {
+                "_id": "build",
+                "isDefault": false
+            }
+        }
+    ]
 }
