@@ -1,23 +1,21 @@
 // -*- mode: jsonc -*-
+// A launch configuration compiles the extension and opens it inside a new window
 {
-    // A launch configuration compiles the extension and opens it inside a new window
     "version": "0.2.0",
     "configurations": [
         {
             "name": "Launch Extension",
             "type": "extensionHost",
             "request": "launch",
-            "runtimeExecutable": "${execPath}",
             "args": [
               "--disable-extensions",
-              "--extensionDevelopmentPath=${workspaceFolder}",
-              "--extensionTestsPath=${workspaceFolder}/out/tests/"
+              "--extensionDevelopmentPath=${workspaceFolder}"
             ],
             "sourceMaps": true,
             "outFiles": [
-              "${workspaceFolder}/out/src",
-              "${workspaceFolder}/out/tests/**/*.js"
+              "${workspaceFolder}/out/**/*.js",
             ],
+            "outputCapture": "console",
             "preLaunchTask": "npm"
         }
     ]
