@@ -30,5 +30,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
+      - name: Install Xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      - name: Run tests Linux
+        if: runner.os == 'Linux'
+        run: |
+          export DISPLAY=:99.0
+          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+          npm test
+
+      - name: Run tests others
+        if: runner.os != 'Linux'
         run: npm test
