@@ -46,9 +46,9 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "test:coverage": "vscode-test --coverage --coverage-output ./build/coverage --coverage-reporter html --coverage-reporter text"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/node": "^20.14.0",
     "@types/vscode": "^1.92.0",
