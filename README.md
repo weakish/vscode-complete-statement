@@ -7,8 +7,7 @@ Mimic IntelliJ's complete statement. In other words:
 
 Works with languages with a C style syntax.
 
-Status
-------
+## Status
 
 This project is orphaned. I switched to Neovim as my mainly used editor.
 I still use vscode occasionally, but for languages not requiring a semicolon to end a statement.
@@ -16,8 +15,7 @@ I still use vscode occasionally, but for languages not requiring a semicolon to 
 Pull requests are still welcome, though. And if you want to maintain this project,
 please open an issue or send a pull request, I will add you to the collaborators of the source code repository.
 
-Install
--------
+## Install
 
 The version on marketplace is outdated.
 Please use [the version on open-vsx.org][open-vsx] ([vscodium] uses open-vsx by default).
@@ -34,8 +32,7 @@ If you want to try the cutting-edge version (`master`), you can clone this repos
 npx vsce package
 ```
 
-Key binding
------------
+## Key binding
 
 This extension uses `ctrl+;` (`cmd+;` on mac) since vscode already uses `ctrl+shift+enter`.
 
@@ -44,8 +41,7 @@ You can rebind `extension.complete-statement` to `ctrl+shift+enter`.
 BTW, `ctrl+;` is easier to remember and type than `ctrl+shift+enter`.
 I myself use `ctrl+enter` since `ctrl+;` is hard to type in dvorak.
 
-Example
--------
+## Example
 
 We use `][` to represent cursor.
 
@@ -85,8 +81,7 @@ Java, Ceylon, and C itself. This extension also works in languages like Kotlin, 
 But I recommend you only use it to complete complete structures,
 not single statement since it will append a semicolon (`;`) at the end.
 
-Configuration
--------------
+## Configuration
 
 By default, complete-statement uses Java style (beginning brace on same line).
 To use Allman style (beginning brace on its own line),
@@ -96,8 +91,7 @@ add the following line in settings:
     "complete-statement.allman": true
 ```
 
-Limitations
-----
+## Limitations
 
 - This extension does not understand semantics of programming languages.
   So complete structure may not work as you expected.
@@ -107,7 +101,6 @@ Limitations
 
 - Indented with tab is not supported yet. Pull request is welcome.
 
-License
--------
+## License
 
 0BSD
