@@ -103,4 +103,4 @@ add the following line in settings:
 
 ## License
 
-0BSD
+The Zero-Clause BSD License (0BSD). Please see the [LICENSE](./LICENSE) file for more information.
