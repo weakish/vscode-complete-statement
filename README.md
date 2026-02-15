@@ -91,6 +91,12 @@ add the following line in settings:
     "complete-statement.allman": true
 ```
 
+## Testing
+
+```sh
+npm run test
+```
+
 ## Limitations
 
 - This extension does not understand semantics of programming languages.
