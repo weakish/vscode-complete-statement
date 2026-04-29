@@ -9,21 +9,19 @@ describe('VSCode complete statement extension test suite', () => {
   before(async () => {
     const doc: vscode.TextDocument = await vscode.workspace.openTextDocument({
       content: '',
-      language: 'plaintext'
+      language: 'plaintext',
     });
 
     editor = await vscode.window.showTextDocument(doc);
 
     if (!editor) {
-      assert.fail("Editor is not available");
+      assert.fail('Editor is not available');
     }
   });
 
-  after(async () => {
-  });
+  after(async () => {});
 
-  beforeEach(async () => {
-  });
+  beforeEach(async () => {});
 
   afterEach(async () => {
     await vscode.commands.executeCommand('editor.action.selectAll');
@@ -31,7 +29,7 @@ describe('VSCode complete statement extension test suite', () => {
   });
 
   it('it can handle if', async () => {
-    await editor.edit(editBuilder => {
+    await editor.edit((editBuilder) => {
       editBuilder.insert(new vscode.Position(0, 0), 'if ()');
     });
 
@@ -41,4 +39,4 @@ describe('VSCode complete statement extension test suite', () => {
 
     assert.equal(text, `if () {${EOL}    ${EOL}}`, `not expected ${text}`);
   });
-})
+});
