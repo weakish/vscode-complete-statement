@@ -47,7 +47,9 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile",
     "test": "vscode-test",
-    "test:coverage": "vscode-test --coverage --coverage-output ./build/coverage --coverage-reporter html --coverage-reporter text"
+    "test:coverage": "vscode-test --coverage --coverage-output ./build/coverage --coverage-reporter html --coverage-reporter text",
+    "format": "prettier --write '{src,tests}/**/*.{js,ts}'",
+    "format:check": "prettier --check '{src,tests}/**/*.{js,ts}'"
   },
   "devDependencies": {
     "@types/node": "^20.14.0",
