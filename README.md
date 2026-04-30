@@ -17,13 +17,9 @@ please open an issue or send a pull request, I will add you to the collaborators
 
 ## Install
 
-The version on marketplace is outdated.
-Please use [the version on open-vsx.org][open-vsx] ([vscodium] uses open-vsx by default).
-You can also download the vsix file at [GitHub releases page][releases],
-and manually install it via "vscode > Extensions > Install from VSIX...".
+You can install this extension from VSCode marketplace or download the vsix file at [GitHub releases page][releases],
+and then manually install it via "vscode > Extensions > Install from VSIX...".
 
-[open-vsx]: https://open-vsx.org/extension/weakish/complete-statement
-[vscodium]: https://vscodium.com/
 [releases]: https://github.com/weakish/vscode-complete-statement/releases
 
 If you want to try the cutting-edge version (`master`), you can clone this repository, and package it yourself:
