@@ -1,2 +1,7 @@
-out
+.idea/
+.fleet/
+build/
+out/
 node_modules
+.vscode-test/
+*.vsix
